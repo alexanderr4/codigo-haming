@@ -6,7 +6,7 @@ class GeneradorMatricesApp:
     def __init__(self, root, control):
         self.control= control
         self.root = root
-        self.root.title("Generador de Matrices")
+        self.root.title("Código de Hamming")
 
         # Etiqueta para ingresar la cadena
         self.etiqueta = tk.Label(self.root, text="Ingrese una cadena de texto:")
@@ -33,6 +33,9 @@ class GeneradorMatricesApp:
         self.frame3 = tk.Frame(self.root)
         self.frame3.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
+        self.frame4 = tk.Frame(self.root)
+        self.frame4.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
+
 
 
 
@@ -52,7 +55,7 @@ class GeneradorMatricesApp:
         matriz_label.pack()
 
         # Mostrar los valores de la cadena solo en la primera matriz (frame1)
-        if frame == self.frame1 or frame == self.frame2 or frame == self.frame3:
+        if frame == self.frame1 or frame == self.frame2 or frame == self.frame3 or frame==self.frame4:
             # Crear la matriz como una lista de listas
             #matriz = [[' ' for _ in range(ancho)] for _ in range(ancho)]
 
@@ -71,17 +74,14 @@ class GeneradorMatricesApp:
     def mostrar_matrices(self):
         texto = self.entrada_texto.get()
 
-        self.generar_matriz(texto, self.frame1, "A ser transmitida", self.control.generate_data_burst_matrix(texto))
-        self.generar_matriz(texto, self.frame2, "A ser recibida(ERRORES)", self.control.generate_error_matrix())
-        self.generar_matriz(texto, self.frame3, "A ser recibida(CORREGIDA)", self.control.generate_data_burst_matrix(texto))
+        self.generar_matriz(texto, self.frame1, "cadena", self.matriz(texto))
+        self.generar_matriz(texto, self.frame2, "A ser recibida(ERRORES)", self.control.generate_data_burst_matrix(texto))
+        self.generar_matriz(texto, self.frame3, "A ser recibida(CORREGIDA)", self.control.generate_error_matrix())
+        self.generar_matriz(texto, self.frame4, "A ser recibida(CORREGIDA)", self.control.error_detection_and_correction())
 
-    def recive_matriz(self, matrix):
-        print(matrix)
-
-    def run (self):
-        self.root.mainloop()
-
-"""if __name__ == "__main__":
-    app = GeneradorMatricesApp()
-    app.run()
-"""
+    def matriz(self, text):
+        resul=[]
+        text = list(text)
+        for i in range(0, len(text)):
+            resul.append(text[i])
+        return resul
