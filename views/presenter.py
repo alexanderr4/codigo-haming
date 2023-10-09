@@ -76,7 +76,7 @@ class GeneradorMatricesApp:
 
         self.generar_matriz(texto, self.frame1, "Cadena", self.matriz(texto))
         self.generar_matriz(texto, self.frame2, "Matriz a ser transmitida", self.control.generate_data_burst_matrix(texto))
-        self.generar_matriz(texto, self.frame3, "Matriz a ser recibida(Errores)", self.control.generate_error_matrix())
+        self.generar_matriz(texto, self.frame3, "Matriz a ser recibida (Errores)", self.control.generate_error_matrix())
         self.generar_matriz(texto, self.frame4, "Matriz a ser recibida (Corregida)", self.control.error_detection_and_correction())
 
     def matriz(self, text):
