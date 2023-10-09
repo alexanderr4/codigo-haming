@@ -12,6 +12,7 @@ class Hamming:
         return '1' if paridad == 0 else '0'
 
     # indentificar las posiciones de los bist de redundancia
+    # define la cantidad de bits de redundancia y genera las posicones donde iran esos bits aplicando 2^n
     def redundant_bits(self, datos):
         datos = datos if len(datos) == 7 else ('0'+datos)
         d = len(datos)
@@ -31,6 +32,7 @@ class Hamming:
         return mi_lista
 
     #composicion de bits de redundacia
+    #devulve las posiciones de bits con las cuales posterioemnte se definira la paridad de los bits de redudancia
     def positionData(self, lista):
         lista2=[]
         m=2
@@ -55,13 +57,14 @@ class Hamming:
         self.list_position = lista2
         return lista2
 
+    #junto con el metodo vlue_paridad definen la paridad para cada uno de los bits de redundancia
+    # teniendo en cuenta las pociones que devuelve le metodo positionData
     def paridad(self, listgloba, list1):
         count = 0
         for i in range(len(list1)):
             listgloba = self.value_parida(listgloba, list1[i])
         return listgloba
 
-    # Función para insertar errores en la ráfaga de datos
     def value_parida(self, list_global, list):
         bits_activos = 0
         for i in range (1,len(list)):
@@ -71,6 +74,7 @@ class Hamming:
         return list_global
 
     #se genera la posicion alatoria donde va estar el error
+    # evitando las posiciones de los bits de redundancia
     def generate_random_error(self, send_list):
         random_position = random.randint(0, len(send_list)-1)
         values = []
@@ -83,7 +87,7 @@ class Hamming:
         send_list[random_position] = '1' if send_list[random_position] =='0' else '0'
         return send_list
 
-    # dectecta el error y lo corrige
+    # dectecta el error y lo 
     def detect_error(self, list_global):
         listaux = copy.deepcopy(self.list_position)
         bits_activos, count, result = 0, 0 ,0
