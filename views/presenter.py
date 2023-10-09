@@ -75,8 +75,8 @@ class GeneradorMatricesApp:
         texto = self.entrada_texto.get()
 
         self.generar_matriz(texto, self.frame1, "cadena", self.matriz(texto))
-        self.generar_matriz(texto, self.frame2, "A ser recibida(ERRORES)", self.control.generate_data_burst_matrix(texto))
-        self.generar_matriz(texto, self.frame3, "A ser recibida(CORREGIDA)", self.control.generate_error_matrix())
+        self.generar_matriz(texto, self.frame2, "A ser transmitida", self.control.generate_data_burst_matrix(texto))
+        self.generar_matriz(texto, self.frame3, "A ser recibida(ERRORES)", self.control.generate_error_matrix())
         self.generar_matriz(texto, self.frame4, "A ser recibida(CORREGIDA)", self.control.error_detection_and_correction())
 
     def matriz(self, text):
