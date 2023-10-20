@@ -8,7 +8,7 @@ class GeneradorMatricesApp:
         self.root = root
         self.root.title("Código de Hamming")
 
-        # Etiqueta para ingresar la cadena
+           # Etiqueta para ingresar la cadena
         self.etiqueta = tk.Label(self.root, text="Ingrese una cadena de texto:")
         self.etiqueta.pack()
 
@@ -16,6 +16,12 @@ class GeneradorMatricesApp:
         self.entrada_texto = tk.Entry(self.root)
         self.entrada_texto.pack()
 
+        self.etiqueta_pariedad= tk.Label(self.root, text="Ingrese Pariedad '0':'1'")
+        self.etiqueta_pariedad.pack()
+
+        ###entrada de pariedad
+        self.entrada_pariedad = tk.Entry(self.root)
+        self.entrada_pariedad.pack()
 
 
         # Botón para mostrar las matrices
