@@ -14,10 +14,10 @@ class GeneradorMatricesApp:
         self.root.configure(bg='#dceafb')
         self.root.geometry("800x600")  # Establece el tamaño de la ventana a 800x600 píxeles
 
-     
+
 
         # Etiqueta para ingresar la cadena
-        self.etiqueta = tk.Label(self.root, text="Ingrese una cadena de texto:")
+        self.etiqueta = tk.Label(self.root, text="Ingrese una cadena de texto:",bg='#e5effc')
         self.etiqueta.pack()
 
         # Entrada de texto
@@ -25,7 +25,7 @@ class GeneradorMatricesApp:
         self.entrada_texto.pack()
         self.entrada_texto.focus_set()
 
-        self.etiqueta_pariedad = tk.Label(self.root, text="Seleccione Paridad:")
+        self.etiqueta_pariedad = tk.Label(self.root, text="Seleccione Paridad:",bg='#e5effc')
         self.etiqueta_pariedad.pack()
 
         # Crear una lista de opciones para el JComboBox
@@ -39,7 +39,7 @@ class GeneradorMatricesApp:
 
 
         # Botón para mostrar las matrices
-        self.boton_mostrar = tk.Button(self.root, text="Mostrar Matrices", command=self.mostrar_matrices)
+        self.boton_mostrar = tk.Button(self.root, text="Simular", command=self.mostrar_matrices)
         self.boton_mostrar.pack()
 
         # Cambiar el color de fondo y el color del texto del botón
@@ -49,18 +49,23 @@ class GeneradorMatricesApp:
         self.boton_mostrar.config(borderwidth=5)
 
         # Tres frames para mostrar las matrices
-        self.frame1 = tk.Frame(self.root)
+        self.frame1 = tk.Frame(self.root,bg="#dceafb")
         self.frame1.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        self.frame2 = tk.Frame(self.root)
+
+        self.frame2 = tk.Frame(self.root,bg="#dceafb")
         self.frame2.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        self.frame3 = tk.Frame(self.root)
+        self.frame3 = tk.Frame(self.root,bg="#dceafb")
         self.frame3.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        self.frame4 = tk.Frame(self.root)
+        self.frame4 = tk.Frame(self.root,bg="#dceafb")
         self.frame4.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
+
+        # Crear un estilo personalizado para el Frame
+        style = ttk.Style()
+        style.configure("Rounded.TFrame", background="#dceafb", borderwidth=5, relief="solid", bordercolor="blue")
 
 
 
@@ -73,12 +78,13 @@ class GeneradorMatricesApp:
             widget.destroy()
 
         # Etiqueta para mostrar el nombre de la matriz
-        nombre_label = tk.Label(frame, text=nombre)
+        nombre_label = tk.Label(frame, text=nombre, bg="#e5effc")
         nombre_label.pack()
 
         # Crear una etiqueta para mostrar la matriz en el frame proporcionado
-        matriz_label = tk.Label(frame)
+        matriz_label = tk.Label(frame, bg='#e5effc')  # Cambia 'lightblue' al color que prefieras
         matriz_label.pack()
+
 
         # Mostrar los valores de la cadena solo en la primera matriz (frame1)
         if frame == self.frame1 or frame == self.frame2 or frame == self.frame3 or frame==self.frame4:
@@ -108,16 +114,16 @@ class GeneradorMatricesApp:
     def mostrar_matrices(self):
         texto = self.entrada_texto.get()
 
-        self.frame1.configure(bg='lightblue')  # Cambia 'lightblue' al color que prefieras
+        self.frame1.configure(bg='#e5effc',)  # Cambia 'lightblue' al color que prefieras
         self.generar_matriz(texto, self.frame1, "Cadena", self.matriz(texto))
 
-        self.frame2.configure(bg='lightgreen')  # Cambia 'lightgreen' al color que prefieras
+        self.frame2.configure(bg='#e5effc')  # Cambia 'lightgreen' al color que prefieras
         self.generar_matriz(texto, self.frame2, "Matriz a ser transmitida", self.control.generate_data_burst_matrix(texto))
 
-        self.frame3.configure(bg='lightpink')  # Cambia 'lightpink' al color que prefieras
+        self.frame3.configure(bg='#e5effc')  # Cambia 'lightpink' al color que prefieras
         self.generar_matriz(texto, self.frame3, "Matriz a ser recibida (Errores)", self.control.generate_error_matrix())
 
-        self.frame4.configure(bg='lightyellow')  # Cambia 'lightyellow' al color que prefieras
+        self.frame4.configure(bg='#e5effc')  # Cambia 'lightyellow' al color que prefieras
         self.generar_matriz(texto, self.frame4, "Matriz a ser recibida (Corregida)", self.control.error_detection_and_correction())
     def matriz(self, text):
         resul=[]
