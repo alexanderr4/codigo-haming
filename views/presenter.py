@@ -36,17 +36,18 @@ class GeneradorMatricesApp:
         # Crear el JComboBox
         self.combobox_pariedad = tk.OptionMenu(self.root, self.paridad_seleccionada, *opciones)
         self.combobox_pariedad.pack()
+        self.combobox_pariedad.config(bg="#004c70", fg="white",borderwidth=5)
 
 
         # Botón para mostrar las matrices
         self.boton_mostrar = tk.Button(self.root, text="Simular", command=self.mostrar_matrices)
-        self.boton_mostrar.pack()
+        self.boton_mostrar.pack(pady=10)
 
         # Cambiar el color de fondo y el color del texto del botón
         self.boton_mostrar.config(bg="#004c70", fg="white")
 
         # Hacer el botón más redondo (ajustar el valor de borderwidth)
-        self.boton_mostrar.config(borderwidth=5)
+        self.boton_mostrar.config(borderwidth=15,relief="groove")
 
         # Tres frames para mostrar las matrices
         self.frame1 = tk.Frame(self.root,bg="#dceafb")
