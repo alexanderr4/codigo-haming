@@ -101,7 +101,7 @@ class GeneradorMatricesApp:
                     matriz_label.config(text=matriz_texto)
 
                     # Llama a la función de actualización nuevamente después de un cierto tiempo (aquí, 500 ms)
-                    frame.after(500, lambda: actualizar_matriz(i + 1))
+                    frame.after(1000, lambda: actualizar_matriz(i + 1))
                 else:
                     # La matriz se ha mostrado por completo
                     frame.after(1000, lambda: matriz_label.config(text=matriz_texto))
