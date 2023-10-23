@@ -88,18 +88,24 @@ class GeneradorMatricesApp:
 
         # Mostrar los valores de la cadena solo en la primera matriz (frame1)
         if frame == self.frame1 or frame == self.frame2 or frame == self.frame3 or frame==self.frame4:
-            # Crear la matriz como una lista de listas
-            #matriz = [[' ' for _ in range(ancho)] for _ in range(ancho)]
+            # Función para cargar gradualmente la matriz fila por fila
+            def cargar_filas_paso_a_paso(pasos, matriz_parcial):
+                if pasos < len(matriz_parcial):
+                    # Crear una representación de cadena de la matriz hasta la fila actual
+                    filas_hasta_el_paso = matriz_parcial[:pasos + 1]
+                    matriz_texto = '\n'.join([' '.join(fila) for fila in filas_hasta_el_paso])
 
-            # Llenar la primera posición de cada fila con las letras de la cadena
-            """for i in range(ancho):
-                matriz[i][0] = cadena[i]"""
+                    # Mostrar la matriz parcial en la etiqueta
+                    matriz_label.config(text=matriz_texto)
 
-            # Crear una representación de cadena de la matriz
-            matriz_texto = '\n'.join([' '.join(fila) for fila in matriz])
+                    # Programar el próximo paso con un retraso
+                    frame.after(1000, cargar_filas_paso_a_paso, pasos + 1, matriz_parcial)
 
-            # Mostrar la matriz en la etiqueta
-            matriz_label.config(text=matriz_texto)
+            # Crear una copia de la matriz para cargarla gradualmente
+            matriz_para_cargar = [fila[:] for fila in matriz]
+
+        # Iniciar la carga gradual de las filas con el primer paso
+        cargar_filas_paso_a_paso(0, matriz_para_cargar)
 
 
 
