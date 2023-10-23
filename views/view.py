@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageFilter, ImageTk
 from tkinter import ttk
+import copy
 
 
 from cotrolers import controler
@@ -25,11 +26,11 @@ class GeneradorMatricesApp:
         self.entrada_texto.pack()
         self.entrada_texto.focus_set()
 
-        self.etiqueta_pariedad = tk.Label(self.root, text="Seleccione Paridad:",bg='#e5effc')
+        self.etiqueta_pariedad = tk.Label(self.root, text="Seleccione la Paridad:",bg='#e5effc')
         self.etiqueta_pariedad.pack()
 
         # Crear una lista de opciones para el JComboBox
-        opciones = ['0', '1']
+        opciones = ['par', 'impar']
 
         self.paridad_seleccionada = tk.StringVar(value=opciones[0])
 
@@ -71,7 +72,7 @@ class GeneradorMatricesApp:
 
     def generar_matriz(self, cadena, frame, nombre, matriz):
         ancho = len(cadena)
-        
+
 
         # Limpiar el contenido anterior del frame
         for widget in frame.winfo_children():
@@ -100,7 +101,7 @@ class GeneradorMatricesApp:
                     matriz_label.config(text=matriz_texto)
 
                     # Llama a la función de actualización nuevamente después de un cierto tiempo (aquí, 500 ms)
-                    frame.after(500, lambda: actualizar_matriz(i + 1))
+                    frame.after(1000, lambda: actualizar_matriz(i + 1))
                 else:
                     # La matriz se ha mostrado por completo
                     frame.after(1000, lambda: matriz_label.config(text=matriz_texto))
@@ -109,8 +110,10 @@ class GeneradorMatricesApp:
             actualizar_matriz()
 
 
-    def entrada(self):
-        return self.entrada_texto.get()
+
+
+    def entrada(self, option):
+        return '0' if option.get() == 'par' else '1'
     def mostrar_matrices(self):
         texto = self.entrada_texto.get()
 
@@ -118,7 +121,7 @@ class GeneradorMatricesApp:
         self.generar_matriz(texto, self.frame1, "Cadena", self.matriz(texto))
 
         self.frame2.configure(bg='#e5effc')  # Cambia 'lightgreen' al color que prefieras
-        self.generar_matriz(texto, self.frame2, "Matriz a ser transmitida", self.control.generate_data_burst_matrix(texto))
+        self.generar_matriz(texto, self.frame2, "Matriz a ser transmitida", self.control.generate_data_burst_matrix(texto, self.entrada(self.paridad_seleccionada)))
 
         self.frame3.configure(bg='#e5effc')  # Cambia 'lightpink' al color que prefieras
         self.generar_matriz(texto, self.frame3, "Matriz a ser recibida (Errores)", self.control.generate_error_matrix())

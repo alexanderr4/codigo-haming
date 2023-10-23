@@ -5,7 +5,7 @@ from models.data import Data
 class Hamming:
     def __init__(self) -> None:
         self.list_position=[]
-
+        self.value_parity = None
     # Función para calcular la paridad (par o impar) de un número binario
     def calcular_paridad(self):
         paridad = self.list_binary.count('1') % 2
@@ -59,18 +59,18 @@ class Hamming:
 
     #junto con el metodo vlue_paridad definen la paridad para cada uno de los bits de redundancia
     # teniendo en cuenta las pociones que devuelve le metodo positionData
-    def paridad(self, listgloba, list1):
+    def parity(self, listgloba, list1):
         count = 0
         for i in range(len(list1)):
-            listgloba = self.value_parida(listgloba, list1[i])
+            listgloba = self.assign_parity(listgloba, list1[i])
         return listgloba
 
-    def value_parida(self, list_global, list):
+    def assign_parity(self, list_global, list):
         bits_activos = 0
         for i in range (1,len(list)):
             if(list_global[list[i]-1] == '1'):
                 bits_activos +=1
-        list_global[int(list[0][1])-1] = '0' if bits_activos % 2==0 else '1'
+            list_global[int(list[0][1])-1] = '0' if bits_activos % 2==int(self.value_parity) else '1'
         return list_global
 
     #se genera la posicion alatoria donde va estar el error
@@ -85,35 +85,40 @@ class Hamming:
             if random_position not in values:
                 break
         send_list[random_position] = '1' if send_list[random_position] =='0' else '0'
+        #return ['0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '1']
+        print(send_list)
         return send_list
 
-    # dectecta el error y lo 
+    # dectecta el error y la posicion donde se encuentra el error
     def detect_error(self, list_global):
         listaux = copy.deepcopy(self.list_position)
         bits_activos, count, result = 0, 0 ,0
         for j in listaux:
             j[0] = int(j[0][1])
-            for i in range(0, len(j)):
+            for i in range(len(j)):
                 if(list_global[j[i]-1] == '1'):
                     bits_activos +=1
-            result += 2 ** count if ('0' if bits_activos % 2==0 else '1') == '1' else 0
+            result += 2 ** count if ('0' if bits_activos % 2==int(self.value_parity) else '1') == '1' else 0
             count +=1
             bits_activos = 0
         return result
 
+    #corrige el error
     def correct_error(self, list_Global, position):
-        list_Global[position-1]= '1' if list_Global[position-1] =='0' else '0'
+        list_Global[position-1] = '1' if list_Global[position-1] =='0' else '0'
         return list_Global
 
-"""m = Hamming(Data('Z').convertTextBynary()[0])
-j=m.calcular_paridad()
+"""m = Hamming()
+#j=m.calcular_paridad()
 
 p=m.redundant_bits(Data('Z').convertTextBynary()[0])
 x= m.positionData(p)
 print(x)
-aux=m.paridad(p, x)
+aux=m.parity(p, x)
+print(aux)
 error =  m.generate_random_error(p)
 
 
-print(m.detect_error(['0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '1']))
 print(m.detect_error(['0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '1']))"""
+
+#['1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1']
