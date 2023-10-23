@@ -79,11 +79,11 @@ class GeneradorMatricesApp:
             widget.destroy()
 
         # Etiqueta para mostrar el nombre de la matriz
-        nombre_label = tk.Label(frame, text=nombre)
+        nombre_label = tk.Label(frame, text=nombre, bg="#e5effc")
         nombre_label.pack()
 
         # Crear una etiqueta para mostrar la matriz en el frame proporcionado
-        matriz_label = tk.Label(frame)
+        matriz_label = tk.Label(frame, bg="#e5effc")
         matriz_label.pack()
 
         # Mostrar los valores de la cadena solo en la primera matriz (frame1)
