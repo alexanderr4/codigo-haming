@@ -74,41 +74,32 @@ class GeneradorMatricesApp:
     def generar_matriz(self, cadena, frame, nombre, matriz):
         ancho = len(cadena)
 
-
         # Limpiar el contenido anterior del frame
         for widget in frame.winfo_children():
             widget.destroy()
 
         # Etiqueta para mostrar el nombre de la matriz
-        nombre_label = tk.Label(frame, text=nombre, bg="#e5effc")
+        nombre_label = tk.Label(frame, text=nombre)
         nombre_label.pack()
 
         # Crear una etiqueta para mostrar la matriz en el frame proporcionado
-        matriz_label = tk.Label(frame, bg='#e5effc')  # Cambia 'lightblue' al color que prefieras
+        matriz_label = tk.Label(frame)
         matriz_label.pack()
-
 
         # Mostrar los valores de la cadena solo en la primera matriz (frame1)
         if frame == self.frame1 or frame == self.frame2 or frame == self.frame3 or frame==self.frame4:
-            matriz_texto = ''
+            # Crear la matriz como una lista de listas
+            #matriz = [[' ' for _ in range(ancho)] for _ in range(ancho)]
 
-            # Función para mostrar la matriz con un retraso
-            def actualizar_matriz(i=0):
-                nonlocal matriz_texto
-                if i < ancho:
-                    # Agrega una fila de la matriz a la etiqueta
-                    fila = ''.join(matriz[i])
-                    matriz_texto += fila + '\n'
-                    matriz_label.config(text=matriz_texto)
+            # Llenar la primera posición de cada fila con las letras de la cadena
+            """for i in range(ancho):
+                matriz[i][0] = cadena[i]"""
 
-                    # Llama a la función de actualización nuevamente después de un cierto tiempo (aquí, 500 ms)
-                    frame.after(1000, lambda: actualizar_matriz(i + 1))
-                else:
-                    # La matriz se ha mostrado por completo
-                    frame.after(1000, lambda: matriz_label.config(text=matriz_texto))
+            # Crear una representación de cadena de la matriz
+            matriz_texto = '\n'.join([' '.join(fila) for fila in matriz])
 
-            # Inicia la actualización de la matriz
-            actualizar_matriz()
+            # Mostrar la matriz en la etiqueta
+            matriz_label.config(text=matriz_texto)
 
 
 
