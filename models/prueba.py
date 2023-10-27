@@ -70,7 +70,10 @@ class Hamming:
         for i in range (1,len(list)):
             if(list_global[list[i]-1] == '1'):
                 bits_activos +=1
-            list_global[int(list[0][1])-1] = '0' if bits_activos % 2==int(self.value_parity) else '1'
+            if(int(self.value_parity)==0):
+                list_global[int(list[0][1])-1] = '0' if bits_activos % 2==0 else '1'
+            else:
+                list_global[int(list[0][1])-1] = '0' if bits_activos % 2>0 else '1'
         return list_global
 
     #se genera la posicion alatoria donde va estar el error
@@ -98,7 +101,10 @@ class Hamming:
             for i in range(len(j)):
                 if(list_global[j[i]-1] == '1'):
                     bits_activos +=1
-            result += 2 ** count if ('0' if bits_activos % 2==int(self.value_parity) else '1') == '1' else 0
+            if(int(self.value_parity)==0):
+                result += 2 ** count if ('0' if bits_activos % 2==0 else '1') == '1' else 0
+            else:
+                result += 2 ** count if ('0' if bits_activos % 2>0 else '1') == '1' else 0
             count +=1
             bits_activos = 0
         return result
